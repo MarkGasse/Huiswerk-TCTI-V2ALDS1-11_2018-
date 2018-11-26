@@ -9,21 +9,21 @@ aantalgevonden: int
 """
 
 def kans():
-    list4 = []
+    verjaardagen = []
     aantalGevonden = 0
-    for lists in range(100):
+    for lijsten in range(100):
         random.seed(None)
         for personen in range(23):
-            list4.append(random.randint(1,366))
+            verjaardagen.append(random.randint(1,366))
         #print(list4)
-        for datum in list4:
-            list4.remove(datum)
-            for datum2 in list4:
+        for datum in verjaardagen:
+            verjaardagen.remove(datum)
+            for datum2 in verjaardagen:
                 if(datum == datum2):
                     aantalGevonden += 1
                     break
 
-        list4 = []
+        verjaardagen = []
 
     return(aantalGevonden)
 

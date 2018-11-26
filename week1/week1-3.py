@@ -13,23 +13,23 @@ list3: int
 
 
 def priem(max):
-    listbool = []
-    list3 = []
+    listBool = []
+    listNumbers = []
 
     for i in range(2,max):
-        list3.append(i)
-        listbool.append(True)
+        listNumbers.append(i)
+        listBool.append(True)
 
-    for item in list3:
+    for item in listNumbers:
         m = item * item
         while m < max:
             m += item
-            listbool[m-item-item] = False
+            listBool[m-item-item] = False
 
-    for index in range (len(listbool)):
-        if(listbool[index] == False):
-            list3.remove(index)
-
-    return(list3)
+    for index in range (len(listBool)):
+        if(listBool[index] == False):
+            listNumbers.remove(index)
+    print(len(listNumbers))
+    return(listNumbers)
 
 print(priem(1000))

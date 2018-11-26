@@ -1,4 +1,4 @@
-string = 'een123zin45 6met-632meerdere+7777getallen'
+zin = 'een123zin45 6met-632meerdere+7777getallen1'
 
 
 """ description
@@ -14,16 +14,19 @@ list2: int
     returning list with integers
 """
 
-def getNumbers(s):
-    list2 = []
-    tmpStr = ''
-    for item in s:
-        if(item.isdigit()):
-            tmpStr += item
-        elif(tmpStr != ''):
-            list2.append(tmpStr)
-            tmpStr = ''
+def getNumbers(zin):
+    integerList = []
+    tmpZin = ''
+    for char in zin:
+        if(char.isdigit()):
+            tmpZin += char
+        elif  tmpZin != '' :
+            integerList.append(int(tmpZin))
+            tmpZin = ''
 
-    return(list2)
+    if tmpZin != '':
+        integerList.append(int(tmpZin))
 
-print(getNumbers(string))
+    return(integerList)
+
+print(getNumbers(zin))
