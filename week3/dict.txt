@@ -1,0 +1,11 @@
+Dit,1
+dit,1
+een,2
+extra,1
+is,1
+met,1
+nog,1
+test,4
+woorden,1
+zin,3
+zoals,1
