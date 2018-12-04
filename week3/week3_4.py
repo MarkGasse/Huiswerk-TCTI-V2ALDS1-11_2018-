@@ -34,8 +34,7 @@ class Trie:
     def __init__(self):
         self.root = TrieNode()
         self.end = ' '
-        self._end = '__end__' #///////////
-
+		
     def __repr__(self):
         return str(self.root)
 
