@@ -1,7 +1,11 @@
 def B(n, k):
-    if k in (0, n):
-        return 1
-    return B(n - 1, k - 1) + B(n - 1, k)
+    result = 1
+    if k > n - k:
+        k = n - k
+    for i in range(k):
+        result /= (i + 1)
+        result *= (n - i)
+    return int(result)
 
 print(B(6,3))
-#print(B(30,10))
+print(B(100,50))
