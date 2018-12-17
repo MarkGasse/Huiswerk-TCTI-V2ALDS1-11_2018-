@@ -38,21 +38,19 @@ class MyCircularLinkedList:
             self.tail.next = self.head
 
     def delete(self,e):
+        current = self.head
         if self.head != None:
-            if self.tail.data == e:
-                self.head = None
-                self.tail = None
-            else:
-                self.head = self.head.next
-                self.tail.next = self.head
-        else:
-            current = self.head
             while current.next != None and current.next.data != e:
                 current = current.next
-            if current.next != None:
+            if current.next != self.tail:
                 current.next = current.next.next
-            if current.next == None:
-                self.tail = current
+            elif self.tail.next == self.tail and self.tail.data == e:
+                return False
+            elif current.next == self.tail:
+                self.tail = self.tail.next
+                current.next = self.tail
+            return True
+        return False
 
 mylist =  MyCircularLinkedList()
 print(mylist)
@@ -60,12 +58,18 @@ mylist.addLast(1)
 mylist.addLast(2)
 mylist.addLast(3)
 print(mylist)
-mylist.delete(2)
+print(mylist.delete(2))
 print(mylist)
-mylist.delete(1)
+print(mylist.delete(3))
 print(mylist)
 mylist.addLast(4)
 mylist.addLast(5)
 print(mylist)
-mylist.delete(4)
+print(mylist.delete(4))
+print(mylist.delete(5))
 print(mylist)
+print(mylist.delete(1))
+print(mylist)
+
+
+

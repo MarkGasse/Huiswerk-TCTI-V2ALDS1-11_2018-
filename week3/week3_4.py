@@ -23,7 +23,7 @@ dictNaarFile(outfile, voorkomen(infile))
 class TrieNode:
     def __init__(self, n = 0, data = None):
         if data == None:
-            data = dict()
+            data = {}
         self.n = n
         self.data = data
 
@@ -34,9 +34,12 @@ class Trie:
     def __init__(self):
         self.root = TrieNode()
         self.end = ' '
-		
+
     def __repr__(self):
-        return str(self.root)
+        s = ''
+        for key, value in self.root.data.items():
+            s += (key + " : "+ str(value) + "\n")
+        return s
 
     def insert(self, woord):
         current = self.root
