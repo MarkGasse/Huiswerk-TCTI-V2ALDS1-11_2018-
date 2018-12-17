@@ -1,16 +1,17 @@
-def F(n):
-    A = []
-    for i in range(len(A)):
-        A[i,0] = 1
-        for j in range(len(A[i])):
-            A[0,j] = 1
-            if j >= m[i]:
-                A[i,j] = A[i-1,j] + A[i,j-m[i]]
-            elif j < m[i]:
-                A[i,j] = A[i-1,j]
-    return A
+def F( m, n):
+    rows = []
+    for i in range(n + 1):
+        rows.append(0)
 
+    rows[0] = 1
+
+    for j in range(0,len(m)):
+        for k in range(m[j], n+1):
+            rows[k] += rows[k - m[j]]
+
+    return rows[n]
+
+m = [1, 2, 5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000, 10000]
 n = 7
-m = [1,2,5,10,20,50,100,200,500,1000,2000,5000,10000]
+print("mogelijkheden:", F(m,n))
 
-print(F(n))
