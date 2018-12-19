@@ -64,10 +64,24 @@ G4 = {v[0]: [v[1], v[3]],
      v[1]: [v[0], v[2]],
      v[2]: [ v[1], v[3], v[4]],
      v[3]: [v[0], v[2]],
-     v[4]: [v[5], v[5], v[2]],
+     v[4]: [v[2], v[5], v[6]],
      v[5]: [v[4], v[6]],
-     v[6]: [v[4] , v[5], v[6]],
+     v[6]: [v[4] , v[5], v[7]],
      v[7]: [v[6]]}
+
+G5 = {v[0]: [v[1], v[2]],
+     v[1]: [v[0], v[3]],
+     v[2]: [ v[0], v[3]],
+     v[3]: [v[1], v[2], v[4], v[6]],
+     v[4]: [v[3], v[5], v[6], v[7]],
+     v[5]: [v[4], v[6]],
+     v[6]: [v[3], v[4] , v[5], v[7]],
+     v[7]: [v[4], v[6]]}
+
+G6 = {v[0]: [v[2]],
+     v[2]: [v[1], v[4]],
+     v[4]: [v[2], v[6]],
+     v[6]: [v[4]]}
 
 print("vertices(G):", vertices(G))
 print("edges(G):", edges(G))
@@ -170,24 +184,20 @@ print("\n----------------------------")
 print("\n------Opdracht week5_2------\n")
 
 def no_cycles(G):
-    notes = vertices(G)
+    seen = []
+    parent = -1
 
-    for pos in notes:
-        for next in notes:
-
-            if (pos, next) in edges(G):
-
-                G[pos].remove(next)
-                G[next].remove(pos)
-
-                check = path_BFS(G,pos,next)
-                #print([pos, next], ":::" ,check)
-                if check != [] and check != [0,4]:
+    for i in vertices(G):
+        for pos in edges(G):
+            if pos[0] == i:
+                if pos[1] in seen and parent is pos[1]:
                     return False
-
-                G[pos].append(next)
-                G[next].append(pos)
+                else:
+                    seen.append(pos[1])
+        parent = i
     return True
+
+
 
 print("should be True: ",no_cycles(G3))
 print("should be False: ",no_cycles(G))
@@ -197,7 +207,69 @@ print("\n----------------------------")
 
 print("\n------Opdracht week5_3------\n")
 
-def get_bridges(G):
-    return
+def get_bridges(G): #klopt nog niet
+    bridges = []
+
+    if not is_connected(G):
+        return False
+    
+    for pos in edges(G):
+
+        G[pos[0]].remove(pos[1])
+        G[pos[1]].remove(pos[0])
+
+        check = path_BFS(G,pos[0],pos[1])
+        print(check)
+        if not is_connected(G):
+            bridges.append(pos)
+
+        G[pos[0]].append(pos[1])
+        G[pos[1]].append(pos[0])
+
+    return bridges
+
+#print("bridges: [(2,4),(4,2),(6,7),(7,6)] == ", get_bridges(G4))
+
+print("\n----------------------------")
+
+print("\n------Opdracht week5_4------\n")
+
+def is_strongly_connected(G):
+    reverse = {}
+    if not is_connected(G):
+        return False
+
+    for pos in vertices(G):
+        reverse[pos] = []
+    for pos in vertices(G):
+        for value in G[pos]:
+            reverse[value].append(pos)
+
+    if not is_connected(reverse):
+        return False
+    return True
+
+print("should be False: ", is_strongly_connected(G))
+print("should be True: ", is_strongly_connected(G2))
+
+print("\n----------------------------")
+
+print("\n------Opdracht week5_5------\n")
+
+def is_Euler_graph(G):
+    notes = vertices(G).copy()
+    for i in notes:
+        if int(str(i)) % 2 is not 0:
+           return False
+    return True
+
+print("Should be False: ", is_Euler_graph(G))
+print("Should be True: ", is_Euler_graph(G6))
+
+def get_Euler_circuit(G,s): # nog afmaken
+    circuit = []
+    return circuit
+
+print(get_Euler_circuit(G5,0))
 
 print("\n----------------------------")
