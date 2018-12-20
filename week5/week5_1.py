@@ -271,7 +271,7 @@ def get_Euler_circuit(G,s): # nog afmaken
     circuit.append(current)
     while edges(G) is not []:
         for next in G[vertices(G)[current]]:
-            if (current,next) is not get_bridges(G) and next != current:
+            if (current,next) not in get_bridges(G) and next != current:
                 prev = current
                 current = next
         circuit.append(current)
