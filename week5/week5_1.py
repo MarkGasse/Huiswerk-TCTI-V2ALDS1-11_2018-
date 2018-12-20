@@ -207,7 +207,7 @@ print("\n----------------------------")
 
 print("\n------Opdracht week5_3------\n")
 
-def get_bridges(G): #klopt nog niet
+def get_bridges(G):
     bridges = []
 
     if not is_connected(G):
@@ -218,8 +218,6 @@ def get_bridges(G): #klopt nog niet
         G[pos[0]].remove(pos[1])
         G[pos[1]].remove(pos[0])
 
-        check = path_BFS(G,pos[0],pos[1])
-        print(check)
         if not is_connected(G):
             bridges.append(pos)
 
@@ -266,10 +264,23 @@ def is_Euler_graph(G):
 print("Should be False: ", is_Euler_graph(G))
 print("Should be True: ", is_Euler_graph(G6))
 
+
 def get_Euler_circuit(G,s): # nog afmaken
     circuit = []
+    current = s
+    circuit.append(current)
+    while edges(G) is not []:
+        for next in G[vertices(G)[current]]:
+            if (current,next) is not get_bridges(G) and next != current:
+                prev = current
+                current = next
+        circuit.append(current)
+        G[current].remove(prev)
+        G[prev].remove(current)
+
     return circuit
 
-print(get_Euler_circuit(G5,0))
+#print(get_Euler_circuit(G5,0))
+
 
 print("\n----------------------------")
