@@ -188,12 +188,11 @@ def no_cycles(G):
     parent = -1
 
     for i in vertices(G):
-        for pos in edges(G):
-            if pos[0] == i:
-                if pos[1] in seen and parent is pos[1]:
-                    return False
-                else:
-                    seen.append(pos[1])
+        for pos in G[i]:
+            if pos in seen and parent == pos:
+                return False
+            else:
+                seen.append(pos)
         parent = i
     return True
 
@@ -209,21 +208,17 @@ print("\n------Opdracht week5_3------\n")
 
 def get_bridges(G):
     bridges = []
-
-    if not is_connected(G):
-        return False
-    
-    for pos in edges(G):
-
-        G[pos[0]].remove(pos[1])
-        G[pos[1]].remove(pos[0])
-
-        if not is_connected(G):
-            bridges.append(pos)
-
-        G[pos[0]].append(pos[1])
-        G[pos[1]].append(pos[0])
-
+    E = edges(G)
+    for edge in E:
+        G[edge[0]].remove(edge[1])
+        G[edge[1]].remove(edge[0])
+        BFS(G,edge[0])
+        for v in vertices(G):
+            if v == edge[1]:
+                if v.distance == INFINITY:
+                    bridges.append(edge)
+        G[edge[0]].append(edge[1])
+        G[edge[1]].append(edge[0])
     return bridges
 
 #print("bridges: [(2,4),(4,2),(6,7),(7,6)] == ", get_bridges(G4))
@@ -265,22 +260,34 @@ print("Should be False: ", is_Euler_graph(G))
 print("Should be True: ", is_Euler_graph(G6))
 
 
-def get_Euler_circuit(G,s): # nog afmaken
-    circuit = []
-    current = s
-    circuit.append(current)
-    while edges(G) is not []:
-        for next in G[vertices(G)[current]]:
-            if (current,next) not in get_bridges(G) and next != current:
-                prev = current
-                current = next
-        circuit.append(current)
-        G[current].remove(prev)
-        G[prev].remove(current)
+def get_Euler_circuit(G,s):
+    C = list()
+    circuit = list()
+    C.append(s)
+    circuit.append(s)
+    while C:
+        current = C.pop()
+        for neighbor in G[current]:
+            if len(C) > 0:
+                continue
+            elif (current,neighbor) in get_bridges(G):
+                if len(G[current]) == 1:
+                    t = neighbor
+                else:
+                    continue
+            else:
+                t = neighbor
+
+            circuit.append(t)
+            C.append(t)
+
+            G[t].remove(current)
+            G[current].remove(t)
 
     return circuit
 
-#print(get_Euler_circuit(G5,0))
+
+print(get_Euler_circuit(G5,v[0]))
 
 
 print("\n----------------------------")
